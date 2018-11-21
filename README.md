@@ -1,2 +1,2 @@
-# assertthat-bdd-standalone
+# Coming soon ... wait for it
 
