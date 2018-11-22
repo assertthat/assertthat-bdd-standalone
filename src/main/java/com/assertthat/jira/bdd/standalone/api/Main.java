@@ -1,15 +1,37 @@
-package com.assertthat.jira.bdd.standalone;
+package com.assertthat.jira.bdd.standalone.api;
 
+import com.assertthat.jira.bdd.standalone.internal.APIUtil;
+import com.assertthat.jira.bdd.standalone.internal.Arguments;
+import com.assertthat.jira.bdd.standalone.internal.FileUtil;
 import org.apache.commons.cli.*;
-import org.apache.commons.codec.binary.StringUtils;
 import org.codehaus.jettison.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-
+/**
+ * Copyright (c) 2018 AssertThat
+ * <p>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * <p>
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * <p>
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * <p>
+ * Created by Glib_Briia on 15/05/2018.
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException, JSONException {
@@ -19,14 +41,14 @@ public class Main {
         Options options = new Options();
 
         Option accessKeyOption = new Option("a", "accessKey", true, "Access key");
-        if(ASSERTTHAT_ACCESS_KEY == null || ASSERTTHAT_ACCESS_KEY.trim().isEmpty()) {
+        if (ASSERTTHAT_ACCESS_KEY == null || ASSERTTHAT_ACCESS_KEY.trim().isEmpty()) {
             accessKeyOption.setRequired(true);
         }
         accessKeyOption.setArgName("ASSERTTHAT_ACCESS_KEY");
         options.addOption(accessKeyOption);
 
         Option secretKeyOption = new Option("s", "secretKey", true, "Secret key");
-        if(ASSERTTHAT_SECRET_KEY == null || ASSERTTHAT_SECRET_KEY.trim().isEmpty()) {
+        if (ASSERTTHAT_SECRET_KEY == null || ASSERTTHAT_SECRET_KEY.trim().isEmpty()) {
             secretKeyOption.setRequired(true);
         }
         secretKeyOption.setArgName("ASSERTTHAT_SECRET_KEY");
@@ -124,7 +146,7 @@ public class Main {
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword());
 
         if (cmd.hasOption("features")) {
-            File inZip =apiUtil.download(new File(arguments.getOutputFolder()), arguments.getMode(), arguments.getJql());
+            File inZip = apiUtil.download(new File(arguments.getOutputFolder()), arguments.getMode(), arguments.getJql());
             File zip = new FileUtil().unpackArchive(inZip, new File(arguments.getOutputFolder()));
             zip.delete();
         }
