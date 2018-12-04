@@ -43,28 +43,6 @@ public class Arguments {
     public Arguments(String accessKey,
                      String secretKey,
                      String projectId,
-                     String proxyURI,
-                     String proxyUsername,
-                     String proxyPassword,
-                     String mode,
-                     String jql) {
-        this(accessKey,
-                secretKey,
-                projectId,
-                null,
-                null,
-                null,
-                null,
-                proxyURI,
-                proxyUsername,
-                proxyPassword,
-                mode,
-                jql);
-    }
-
-    public Arguments(String accessKey,
-                     String secretKey,
-                     String projectId,
                      String runName,
                      String outputFolder,
                      String jsonReportFolder,
