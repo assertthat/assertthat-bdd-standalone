@@ -11,6 +11,7 @@ import com.sun.jersey.multipart.Boundary;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.MultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
+import com.sun.jersey.multipart.impl.MultiPartWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHeaders;
@@ -125,6 +126,8 @@ public class APIUtil {
     }
 
     public Long upload(Long runId, String runName, String filePath) throws IOException, JSONException {
+        config.getClasses().add(FormDataMultiPart.class);
+        config.getClasses().add(MultiPartWriter.class);
         Client client = ApacheHttpClient4.create(config);
         client.addFilter(new HTTPBasicAuthFilter(this.accessKey, this.secretKey));
         WebResource webResource = client.resource(this.reportUrl);
