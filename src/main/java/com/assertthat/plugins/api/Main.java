@@ -130,11 +130,11 @@ public class Main {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             System.err.println(e.getMessage());
-            formatter.printHelp("assertthat-bdd-standalone", options);
+            formatter.printHelp("assertthat-bdd-standalone-1.1.jar", options);
             System.exit(1);
         }
         if (cmd.hasOption("help")) {
-            formatter.printHelp("assertthat-bdd-standalone", options);
+            formatter.printHelp("assertthat-bdd-standalone-1.1.jar", options);
             System.exit(0);
         }
 
