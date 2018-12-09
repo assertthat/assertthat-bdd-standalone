@@ -110,9 +110,14 @@ public class Main {
         Option reportOption = new Option("r", "report", false, "Upload report");
         reportOption.setRequired(false);
 
+        Option helpOption = new Option("h", "help", false, "Display help");
+        helpOption.setRequired(false);
+
+
         OptionGroup actionGroup = new OptionGroup();
         actionGroup.addOption(featuresOption);
         actionGroup.addOption(reportOption);
+        actionGroup.addOption(helpOption);
         actionGroup.setRequired(true);
 
         options.addOptionGroup(actionGroup);
@@ -128,6 +133,11 @@ public class Main {
             formatter.printHelp("assertthat-bdd-standalone", options);
             System.exit(1);
         }
+        if (cmd.hasOption("help")) {
+            formatter.printHelp("assertthat-bdd-standalone", options);
+            System.exit(0);
+        }
+
         Arguments arguments = new Arguments(
                 cmd.getOptionValue("accessKey"),
                 cmd.getOptionValue("secretKey"),
