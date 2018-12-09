@@ -112,12 +112,12 @@ public class Main {
 
         Option helpOption = new Option("h", "help", false, "Display help");
         helpOption.setRequired(false);
-
+        options.addOption(helpOption);
 
         OptionGroup actionGroup = new OptionGroup();
         actionGroup.addOption(featuresOption);
         actionGroup.addOption(reportOption);
-        actionGroup.addOption(helpOption);
+
         actionGroup.setRequired(true);
 
         options.addOptionGroup(actionGroup);
