@@ -89,9 +89,14 @@ public class APIUtil {
 
     public File download(File targetDir, String mode, String jql) throws IOException {
         if (targetDir.exists()) {
-            FileUtils.deleteDirectory(targetDir);
+            for (File f : targetDir.listFiles()) {
+                if (f.getName().endsWith(".feature")) {
+                    f.delete();
+                }
+            }
+        }else{
+            targetDir.mkdirs();
         }
-        targetDir.mkdirs();
         Client client = ApacheHttpClient4.create(config);
         client.addFilter(new HTTPBasicAuthFilter(this.accessKey, this.secretKey));
         WebResource webResource = client.resource(this.featuresUrl);
