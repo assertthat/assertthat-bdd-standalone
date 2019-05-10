@@ -75,7 +75,7 @@ public class Arguments {
             this.runName = "Test run " + new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(new Date());
         }
 
-        if (jsonReportFolder != null) {
+        if (jsonReportFolder != null && !jsonReportFolder.trim().isEmpty()) {
             this.jsonReportFolder = jsonReportFolder;
             this.jsonReportFolder += jsonReportFolder.endsWith("/") ? "" : "/";
         }
