@@ -15,7 +15,7 @@ Main features are:
 
 ## Installation
 
-- Download jar file from the latest release here on GitHub
+- Download jar file from the latest [release assets section](https://github.com/assertthat/assertthat-bdd-standalone/releases)
 
 ## Usage
 
