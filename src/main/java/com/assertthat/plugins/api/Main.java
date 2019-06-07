@@ -104,6 +104,11 @@ public class Main {
         jqlOption.setArgName("JQL");
         options.addOption(jqlOption);
 
+        Option typeOption = new Option("k", "type", true, "Report type");
+        typeOption.setRequired(false);
+        typeOption.setArgName("cucumber|karate");
+        options.addOption(typeOption);
+
         Option featuresOption = new Option("f", "features", false, "Download features");
         featuresOption.setRequired(false);
 
@@ -150,7 +155,8 @@ public class Main {
                 cmd.getOptionValue("proxyUsername"),
                 cmd.getOptionValue("proxyPassword"),
                 cmd.getOptionValue("mode"),
-                cmd.getOptionValue("jql")
+                cmd.getOptionValue("jql"),
+                cmd.getOptionValue("type")
         );
 
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword());
@@ -164,7 +170,7 @@ public class Main {
             String[] files = new FileUtil().findJsonFiles(new File(arguments.getJsonReportFolder()), arguments.getJsonReportIncludePattern(), null);
             Long runid = -1L;
             for (String f : files) {
-                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f);
+                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType());
             }
         }
     }

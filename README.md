@@ -22,9 +22,9 @@ Main features are:
 ```
 java -jar assertthat-bdd-standalone-1.1.jar
 
-Missing required options: a, s, i, [-f Download features, -r Upload report]
+Required options: a, s, i, [-f Download features, -r Upload report]
 
-usage: assertthat-bdd-standalone-1.1.jar
+usage: assertthat-bdd-standalone-1.3.jar
  -a,--accessKey <ASSERTTHAT_ACCESS_KEY>    Access key
  -f,--features                             Download features
  -h,--help                                 Display help
@@ -37,6 +37,7 @@ usage: assertthat-bdd-standalone-1.1.jar
  -q,--jql <JQL>                            JQL filter for features
  -r,--report                               Upload report
  -s,--secretKey <ASSERTTHAT_SECRET_KEY>    Secret key
+ -k,--type <cucumber|karate>               Report type
  -t,--jsonReportIncludePattern <PATTERN>   Pattern for json file names
  -u,--proxyUsername <USERNAME>             Proxy username
  -x,--proxyURI <URI>                       Proxy URI

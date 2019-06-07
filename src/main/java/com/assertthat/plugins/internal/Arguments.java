@@ -39,6 +39,7 @@ public class Arguments {
     private String proxyPassword;
     private String mode;
     private String jql;
+    private String type="cucumber";
 
     public Arguments(String accessKey,
                      String secretKey,
@@ -51,7 +52,8 @@ public class Arguments {
                      String proxyUsername,
                      String proxyPassword,
                      String mode,
-                     String jql) {
+                     String jql,
+                     String type) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -74,6 +76,9 @@ public class Arguments {
         } else {
             this.runName = "Test run " + new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(new Date());
         }
+        if(type != null){
+            this.type = type;
+        }
 
         if (jsonReportFolder != null && !jsonReportFolder.trim().isEmpty()) {
             this.jsonReportFolder = jsonReportFolder;
@@ -81,6 +86,14 @@ public class Arguments {
         }
         this.mode = mode;
         this.jql = jql;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getMode() {
