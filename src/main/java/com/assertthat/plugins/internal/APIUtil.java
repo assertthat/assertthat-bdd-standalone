@@ -63,13 +63,13 @@ public class APIUtil {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
         this.projectId = projectId;
-        if (proxyURI != null) {
+        if (proxyURI != null && !proxyURI.trim().isEmpty()) {
             this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyURI", proxyURI);
         }
-        if (proxyUsername != null) {
+        if (proxyUsername != null && !proxyUsername.trim().isEmpty()) {
             this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyUsername", proxyUsername);
         }
-        if (proxyPassword != null) {
+        if (proxyPassword != null && !proxyPassword.trim().isEmpty()) {
             this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyPassword", proxyPassword);
         }
         this.featuresUrl = "https://bdd.assertthat.com/rest/api/1/project/" + projectId + "/features";
