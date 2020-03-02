@@ -72,8 +72,8 @@ public class APIUtil {
         if (proxyPassword != null && !proxyPassword.trim().isEmpty()) {
             this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyPassword", proxyPassword);
         }
-        this.featuresUrl = "https://bdd.assertthat.com/rest/api/1/project/" + projectId + "/features";
-        this.reportUrl = "https://bdd.assertthat.com/rest/api/1/project/" + projectId + "/report";
+        this.featuresUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/features";
+        this.reportUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/report";
     }
 
     public static void copyInputStream(InputStream in, OutputStream out) throws IOException {
