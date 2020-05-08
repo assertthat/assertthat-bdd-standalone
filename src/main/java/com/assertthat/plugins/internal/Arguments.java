@@ -39,7 +39,8 @@ public class Arguments {
     private String proxyPassword;
     private String mode;
     private String jql;
-    private String type="cucumber";
+    private String jiraServerUrl;
+    private String type = "cucumber";
 
     public Arguments(String accessKey,
                      String secretKey,
@@ -53,7 +54,8 @@ public class Arguments {
                      String proxyPassword,
                      String mode,
                      String jql,
-                     String type) {
+                     String type,
+                     String jiraServerUrl) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -70,13 +72,14 @@ public class Arguments {
         this.proxyURI = proxyURI;
         this.proxyPassword = proxyPassword;
         this.proxyUsername = proxyUsername;
+        this.jiraServerUrl = jiraServerUrl;
 
         if (runName != null) {
             this.runName = runName;
         } else {
             this.runName = "Test run " + new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(new Date());
         }
-        if(type != null){
+        if (type != null) {
             this.type = type;
         }
 
@@ -102,6 +105,14 @@ public class Arguments {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public String getJiraServerUrl() {
+        return jiraServerUrl;
+    }
+
+    public void setJiraServerUrl(String jiraServerUrl) {
+        this.jiraServerUrl = jiraServerUrl;
     }
 
     public String getJql() {

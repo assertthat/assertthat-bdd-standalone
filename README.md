@@ -41,4 +41,5 @@ usage: assertthat-bdd-standalone-1.3.jar
  -t,--jsonReportIncludePattern <PATTERN>   Pattern for json file names
  -u,--proxyUsername <USERNAME>             Proxy username
  -x,--proxyURI <URI>                       Proxy URI
+ -l,--jiraServerUrl <URI>                  Jira Server URL
 ```

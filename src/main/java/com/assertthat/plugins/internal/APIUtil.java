@@ -59,7 +59,7 @@ public class APIUtil {
     private String reportUrl;
     private DefaultClientConfig config = new DefaultClientConfig();
 
-    public APIUtil(String projectId, String accessKey, String secretKey, String proxyURI, String proxyUsername, String proxyPassword) {
+    public APIUtil(String projectId, String accessKey, String secretKey, String proxyURI, String proxyUsername, String proxyPassword, String jiraServerURL) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
         this.projectId = projectId;
@@ -72,8 +72,13 @@ public class APIUtil {
         if (proxyPassword != null && !proxyPassword.trim().isEmpty()) {
             this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyPassword", proxyPassword);
         }
-        this.featuresUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/features";
-        this.reportUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/report";
+        if(jiraServerURL!=null) {
+            this.featuresUrl = jiraServerURL+"/rest/assertthat/latest/project/"+projectId+"/client/features";
+            this.reportUrl = jiraServerURL+"/rest/assertthat/latest/project/"+projectId+"/client/report";
+        }else{
+            this.featuresUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/features";
+            this.reportUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/report";
+        }
     }
 
     public static void copyInputStream(InputStream in, OutputStream out) throws IOException {

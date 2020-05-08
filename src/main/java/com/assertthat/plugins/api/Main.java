@@ -69,6 +69,11 @@ public class Main {
         outputFolderOption.setArgName("FOLDER PATH");
         options.addOption(outputFolderOption);
 
+        Option jiraServerUrl = new Option("l", "jiraServerUrl", true, "Jira server URL");
+        outputFolderOption.setRequired(false);
+        outputFolderOption.setArgName("JIRA SERVER URL");
+        options.addOption(jiraServerUrl);
+
         Option inputFolderOption = new Option("j", "jsonReportFolder", true, "Cucumber json files folder");
         inputFolderOption.setRequired(false);
         inputFolderOption.setArgName("FOLDER PATH");
@@ -156,10 +161,11 @@ public class Main {
                 cmd.getOptionValue("proxyPassword"),
                 cmd.getOptionValue("mode"),
                 cmd.getOptionValue("jql"),
-                cmd.getOptionValue("type")
+                cmd.getOptionValue("type"),
+                cmd.getOptionValue("jiraServerUrl")
         );
 
-        APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword());
+        APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl());
 
         if (cmd.hasOption("features")) {
             File inZip = apiUtil.download(new File(arguments.getOutputFolder()), arguments.getMode(), arguments.getJql());
