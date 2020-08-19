@@ -35,8 +35,7 @@ usage: assertthat-bdd-standalone-1.6.jar
  -o,--outputFolder <FOLDER PATH>           Features output folder
  -p,--proxyPassword <PASSWORD>             Proxy password
  -q,--jql <JQL>                            JQL filter for features
- -b,--tags <tags expression                Tags expression for scenarios
- filtering
+ -b,--tags <tags expression>                Tags expression for scenarios filtering
  -r,--report                               Upload report
  -s,--secretKey <ASSERTTHAT_SECRET_KEY>    Secret key
  -k,--type <cucumber|karate>               Report type
