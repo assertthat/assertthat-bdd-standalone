@@ -41,6 +41,7 @@ public class Arguments {
     private String jql;
     private String jiraServerUrl;
     private String type = "cucumber";
+    private String tags;
 
     public Arguments(String accessKey,
                      String secretKey,
@@ -54,6 +55,7 @@ public class Arguments {
                      String proxyPassword,
                      String mode,
                      String jql,
+                     String tags,
                      String type,
                      String jiraServerUrl) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
@@ -81,6 +83,9 @@ public class Arguments {
         }
         if (type != null) {
             this.type = type;
+        }
+        if (tags != null) {
+            this.tags = tags;
         }
 
         if (jsonReportFolder != null && !jsonReportFolder.trim().isEmpty()) {
@@ -203,4 +208,11 @@ public class Arguments {
         this.proxyPassword = proxyPassword;
     }
 
+    public String getTags() {
+        return this.tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 }

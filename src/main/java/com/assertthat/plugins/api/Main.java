@@ -109,6 +109,12 @@ public class Main {
         jqlOption.setArgName("JQL");
         options.addOption(jqlOption);
 
+        Option tagsOption = new Option("b", "tags", true, "Tags filter for " +
+                "scenarios");
+        tagsOption.setRequired(false);
+        tagsOption.setArgName("tags");
+        options.addOption(tagsOption);
+
         Option typeOption = new Option("k", "type", true, "Report type");
         typeOption.setRequired(false);
         typeOption.setArgName("cucumber|karate");
@@ -161,6 +167,7 @@ public class Main {
                 cmd.getOptionValue("proxyPassword"),
                 cmd.getOptionValue("mode"),
                 cmd.getOptionValue("jql"),
+                cmd.getOptionValue("tags"),
                 cmd.getOptionValue("type"),
                 cmd.getOptionValue("jiraServerUrl")
         );
@@ -168,7 +175,10 @@ public class Main {
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl());
 
         if (cmd.hasOption("features")) {
-            File inZip = apiUtil.download(new File(arguments.getOutputFolder()), arguments.getMode(), arguments.getJql());
+            File inZip =
+                    apiUtil.download(new File(arguments.getOutputFolder()),
+                            arguments.getMode(), arguments.getJql() ,
+                            arguments.getTags());
             File zip = new FileUtil().unpackArchive(inZip, new File(arguments.getOutputFolder()));
             zip.delete();
         }

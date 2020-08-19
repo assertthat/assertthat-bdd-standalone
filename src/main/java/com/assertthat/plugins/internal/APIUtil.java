@@ -92,7 +92,8 @@ public class APIUtil {
         out.close();
     }
 
-    public File download(File targetDir, String mode, String jql) throws IOException {
+    public File download(File targetDir, String mode, String jql,
+                         String tags) throws IOException {
         if (targetDir.exists()) {
             for (File f : targetDir.listFiles()) {
                 if (f.getName().endsWith(".feature")) {
@@ -108,6 +109,9 @@ public class APIUtil {
         MultivaluedMap queryParams = new MultivaluedMapImpl();
         if (mode != null) {
             queryParams.add("mode", mode.trim());
+        }
+        if (tags != null) {
+            queryParams.add("tags", tags.trim());
         }
         if (jql != null) {
             queryParams.add("jql", jql.trim());
