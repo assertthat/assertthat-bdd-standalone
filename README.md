@@ -20,7 +20,7 @@ Main features are:
 ## Usage
 
 ```
-java -jar assertthat-bdd-standalone-1.6.jar
+java -jar assertthat-bdd-standalone-1.7.jar
 
 Required options: a, s, i, [-f Download features, -r Upload report]
 
