@@ -38,6 +38,7 @@ public class Arguments {
     private String proxyUsername;
     private String proxyPassword;
     private String mode;
+    private String metadata;
     private String jql;
     private String jiraServerUrl;
     private String type = "cucumber";
@@ -94,6 +95,35 @@ public class Arguments {
         }
         this.mode = mode;
         this.jql = jql;
+    }
+
+    public Arguments(String accessKey,
+                     String secretKey,
+                     String projectId,
+                     String runName,
+                     String outputFolder,
+                     String jsonReportFolder,
+                     String jsonReportIncludePattern,
+                     String proxyURI,
+                     String proxyUsername,
+                     String proxyPassword,
+                     String mode,
+                     String jql,
+                     String tags,
+                     String type,
+                     String jiraServerUrl,
+                     String metadata) {
+        this(accessKey,secretKey ,projectId,runName,outputFolder,jsonReportFolder,jsonReportIncludePattern,proxyURI,proxyUsername,proxyPassword,mode,jql,tags,type,jiraServerUrl);
+        this.metadata = metadata;
+
+
+    }
+    public String getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
     }
 
     public String getType() {

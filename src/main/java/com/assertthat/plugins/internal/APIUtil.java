@@ -139,7 +139,7 @@ public class APIUtil {
         return zip;
     }
 
-    public Long upload(Long runId, String runName, String filePath, String type) throws IOException, JSONException {
+    public Long upload(Long runId, String runName, String filePath, String type, String metadata) throws IOException, JSONException {
         config.getClasses().add(FormDataMultiPart.class);
         config.getClasses().add(MultiPartWriter.class);
         Client client = ApacheHttpClient4.create(config);
@@ -149,6 +149,7 @@ public class APIUtil {
         queryParams.add("runName", runName);
         queryParams.add("runId", runId.toString());
         queryParams.add("type", type);
+        queryParams.add("metadata", metadata);
         client.addFilter(new ClientFilter() {
             @Override
             public ClientResponse handle(ClientRequest
