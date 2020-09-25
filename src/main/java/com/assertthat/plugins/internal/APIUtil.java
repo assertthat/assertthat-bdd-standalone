@@ -1,5 +1,6 @@
 package com.assertthat.plugins.internal;
 
+import com.google.common.net.UrlEscapers;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.ClientFilter;
@@ -152,10 +153,7 @@ public class APIUtil {
         queryParams.add("runId", runId.toString());
         queryParams.add("type", type);
         if(metadata!=null) {
-            queryParams.add("metadata", URLEncoder.encode(metadata, StandardCharsets.UTF_8.toString()));
-            System.err.println(URLEncoder.encode(metadata, StandardCharsets.UTF_8.toString()));
-            System.err.println(runName);
-
+            queryParams.add("metadata", UrlEscapers.urlFragmentEscaper().escape(metadata));
         }
         client.addFilter(new ClientFilter() {
             @Override
