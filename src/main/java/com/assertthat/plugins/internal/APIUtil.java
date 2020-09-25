@@ -21,6 +21,8 @@ import org.codehaus.jettison.json.JSONObject;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
@@ -149,7 +151,12 @@ public class APIUtil {
         queryParams.add("runName", runName);
         queryParams.add("runId", runId.toString());
         queryParams.add("type", type);
-        queryParams.add("metadata", metadata);
+        if(metadata!=null) {
+            queryParams.add("metadata", URLEncoder.encode(metadata, StandardCharsets.UTF_8.toString()));
+            System.err.println(URLEncoder.encode(metadata, StandardCharsets.UTF_8.toString()));
+            System.err.println(runName);
+
+        }
         client.addFilter(new ClientFilter() {
             @Override
             public ClientResponse handle(ClientRequest
@@ -182,6 +189,7 @@ public class APIUtil {
             JSONObject responseJson = new JSONObject(responseBody);
             return Long.valueOf(responseJson.getString("runId"));
         } else {
+            LOGGER.warning(IOUtils.toString(response.getEntityInputStream(), "UTF-8"));
             LOGGER.warning("Failed to process " + filePath);
             return runId;
         }
