@@ -96,7 +96,7 @@ public class APIUtil {
     }
 
     public File download(File targetDir, String mode, String jql,
-                         String tags) throws IOException {
+                         String tags, boolean isNumbered) throws IOException {
         if (targetDir.exists()) {
             for (File f : targetDir.listFiles()) {
                 if (f.getName().endsWith(".feature")) {
@@ -119,6 +119,7 @@ public class APIUtil {
         if (jql != null) {
             queryParams.add("jql", jql.trim());
         }
+        queryParams.add("numbered", isNumbered);
         client.addFilter(new ClientFilter() {
             @Override
             public ClientResponse handle(ClientRequest

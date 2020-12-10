@@ -123,6 +123,10 @@ public class Main {
         Option featuresOption = new Option("f", "features", false, "Download features");
         featuresOption.setRequired(false);
 
+        Option numberedOption = new Option("d", "numbered", false, "Prepend ordinal to feature name");
+        numberedOption.setRequired(false);
+        options.addOption(numberedOption);
+
         Option reportOption = new Option("r", "report", false, "Upload report");
         reportOption.setRequired(false);
 
@@ -169,7 +173,8 @@ public class Main {
                 cmd.getOptionValue("jql"),
                 cmd.getOptionValue("tags"),
                 cmd.getOptionValue("type"),
-                cmd.getOptionValue("jiraServerUrl")
+                cmd.getOptionValue("jiraServerUrl"),
+                cmd.hasOption("numbered")
         );
 
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl());
@@ -178,7 +183,7 @@ public class Main {
             File inZip =
                     apiUtil.download(new File(arguments.getOutputFolder()),
                             arguments.getMode(), arguments.getJql() ,
-                            arguments.getTags());
+                            arguments.getTags(), arguments.isNumbered());
             File zip = new FileUtil().unpackArchive(inZip, new File(arguments.getOutputFolder()));
             zip.delete();
         }

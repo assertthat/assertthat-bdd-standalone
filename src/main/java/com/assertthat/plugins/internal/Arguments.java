@@ -43,6 +43,7 @@ public class Arguments {
     private String jiraServerUrl;
     private String type = "cucumber";
     private String tags;
+    private boolean numbered;
 
     public Arguments(String accessKey,
                      String secretKey,
@@ -58,7 +59,8 @@ public class Arguments {
                      String jql,
                      String tags,
                      String type,
-                     String jiraServerUrl) {
+                     String jiraServerUrl,
+                     boolean numbered) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -76,6 +78,7 @@ public class Arguments {
         this.proxyPassword = proxyPassword;
         this.proxyUsername = proxyUsername;
         this.jiraServerUrl = jiraServerUrl;
+        this.numbered = numbered;
 
         if (runName != null) {
             this.runName = runName;
@@ -112,8 +115,9 @@ public class Arguments {
                      String tags,
                      String type,
                      String jiraServerUrl,
-                     String metadata) {
-        this(accessKey,secretKey ,projectId,runName,outputFolder,jsonReportFolder,jsonReportIncludePattern,proxyURI,proxyUsername,proxyPassword,mode,jql,tags,type,jiraServerUrl);
+                     String metadata,
+                     boolean numbered) {
+        this(accessKey,secretKey ,projectId,runName,outputFolder,jsonReportFolder,jsonReportIncludePattern,proxyURI,proxyUsername,proxyPassword,mode,jql,tags,type,jiraServerUrl, numbered);
         this.metadata = metadata;
 
 
@@ -244,5 +248,9 @@ public class Arguments {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public boolean isNumbered() {
+        return numbered;
     }
 }
