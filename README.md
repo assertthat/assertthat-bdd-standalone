@@ -43,4 +43,5 @@ usage: assertthat-bdd-standalone-1.6.jar
  -u,--proxyUsername <USERNAME>             Proxy username
  -x,--proxyURI <URI>                       Proxy URI
  -l,--jiraServerUrl <URI>                  Jira Server URL
+ -d,--numbered <true|false>                Prepend ordinal to feature name (default is true)
 ```

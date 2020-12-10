@@ -5,7 +5,7 @@
 
     <groupId>com.assertthat.plugins</groupId>
     <artifactId>assertthat-bdd-standalone</artifactId>
-    <version>1.9.1</version>
+    <version>1.9.2</version>
     <name>assertthat-bdd-standalone</name>
     <description>AssertThat BDD Jira plugin client standalone</description>
     <url>http://www.assertthat.com</url>

@@ -123,8 +123,9 @@ public class Main {
         Option featuresOption = new Option("f", "features", false, "Download features");
         featuresOption.setRequired(false);
 
-        Option numberedOption = new Option("d", "numbered", false, "Prepend ordinal to feature name");
+        Option numberedOption = new Option("d", "numbered", true, "Prepend ordinal to feature name (default is true)");
         numberedOption.setRequired(false);
+        numberedOption.setArgName("true|false");
         options.addOption(numberedOption);
 
         Option reportOption = new Option("r", "report", false, "Upload report");
@@ -174,7 +175,7 @@ public class Main {
                 cmd.getOptionValue("tags"),
                 cmd.getOptionValue("type"),
                 cmd.getOptionValue("jiraServerUrl"),
-                cmd.hasOption("numbered")
+                cmd.getOptionValue("numbered")
         );
 
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl());
