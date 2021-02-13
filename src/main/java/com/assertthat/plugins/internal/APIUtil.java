@@ -119,7 +119,7 @@ public class APIUtil {
         if (jql != null) {
             queryParams.add("jql", jql.trim());
         }
-        queryParams.add("numbered", isNumbered);
+        queryParams.add("numbered", String.valueOf(isNumbered));
         client.addFilter(new ClientFilter() {
             @Override
             public ClientResponse handle(ClientRequest

@@ -60,7 +60,7 @@ public class Arguments {
                      String tags,
                      String type,
                      String jiraServerUrl,
-                     String numbered) {
+                     boolean numbered) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -78,7 +78,7 @@ public class Arguments {
         this.proxyPassword = proxyPassword;
         this.proxyUsername = proxyUsername;
         this.jiraServerUrl = jiraServerUrl;
-        this.numbered = numbered == null || numbered.equals("true");
+        this.numbered = numbered;
 
         if (runName != null) {
             this.runName = runName;
@@ -116,7 +116,7 @@ public class Arguments {
                      String type,
                      String jiraServerUrl,
                      String metadata,
-                     String numbered) {
+                     boolean numbered) {
         this(accessKey, secretKey, projectId, runName, outputFolder, jsonReportFolder, jsonReportIncludePattern, proxyURI, proxyUsername, proxyPassword, mode, jql, tags, type, jiraServerUrl, numbered);
         this.metadata = metadata;
 

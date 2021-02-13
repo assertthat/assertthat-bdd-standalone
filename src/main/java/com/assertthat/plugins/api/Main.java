@@ -158,7 +158,10 @@ public class Main {
             formatter.printHelp("assertthat-bdd-standalone-1.3.jar", options);
             System.exit(0);
         }
-
+        boolean isNumbered = true;
+        if(cmd.hasOption("numbered") && cmd.getOptionValue("numbered") !=null && cmd.getOptionValue("numbered").equals("false")){
+            isNumbered = false;
+        }
         Arguments arguments = new Arguments(
                 cmd.getOptionValue("accessKey"),
                 cmd.getOptionValue("secretKey"),
@@ -175,7 +178,7 @@ public class Main {
                 cmd.getOptionValue("tags"),
                 cmd.getOptionValue("type"),
                 cmd.getOptionValue("jiraServerUrl"),
-                cmd.getOptionValue("numbered")
+                isNumbered
         );
 
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl());
