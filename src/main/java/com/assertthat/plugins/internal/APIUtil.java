@@ -153,7 +153,9 @@ public class APIUtil {
         queryParams.add("runName", runName);
         queryParams.add("runId", runId.toString());
         queryParams.add("type", type);
-        queryParams.add("jql", jql);
+        if (jql != null) {
+            queryParams.add("jql", jql.trim());
+        }
         if(metadata!=null) {
             queryParams.add("metadata", UrlEscapers.urlFragmentEscaper().escape(metadata));
         }

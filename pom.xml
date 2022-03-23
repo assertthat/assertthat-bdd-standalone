@@ -25,7 +25,7 @@
         <url>https://github.com/assertthat/assertthat-bdd-standalone</url>
         <connection>scm:git:git@github.com:assertthat/assertthat-bdd-standalone.git</connection>
         <developerConnection>scm:git:git@github.com:assertthat/assertthat-bdd-standalone.git</developerConnection>
-        <tag>v1.6</tag>
+        <tag>v1.9.4</tag>
   </scm>
     <developers>
         <developer>

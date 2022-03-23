@@ -20,7 +20,7 @@ Main features are:
 ## Usage
 
 ```
-java -jar assertthat-bdd-standalone-1.9.2.jar
+java -jar assertthat-bdd-standalone-1.9.4.jar
 
 Required options: a, s, i, [-f Download features, -r Upload report]
 
@@ -34,7 +34,7 @@ usage: assertthat-bdd-standalone-1.6.jar
  -n,--runName <NAME>                       Test run name
  -o,--outputFolder <FOLDER PATH>           Features output folder
  -p,--proxyPassword <PASSWORD>             Proxy password
- -q,--jql <JQL>                            JQL filter for features
+ -q,--jql <JQL>                            JQL filter for features download and Jira issues to be updated with test results
  -b,--tags <tags expression>               Tags expression for scenarios filtering
  -r,--report                               Upload report
  -s,--secretKey <ASSERTTHAT_SECRET_KEY>    Secret key
