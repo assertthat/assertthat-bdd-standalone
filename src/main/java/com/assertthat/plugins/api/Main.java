@@ -104,7 +104,7 @@ public class Main {
         modeOption.setArgName("automated|manual|both");
         options.addOption(modeOption);
 
-        Option jqlOption = new Option("q", "jql", true, "JQL filter for features");
+        Option jqlOption = new Option("q", "jql", true, "JQL filter for features and Jira ticket to be updated with report upload");
         jqlOption.setRequired(false);
         jqlOption.setArgName("JQL");
         options.addOption(jqlOption);
@@ -195,7 +195,7 @@ public class Main {
             String[] files = new FileUtil().findJsonFiles(new File(arguments.getJsonReportFolder()), arguments.getJsonReportIncludePattern(), null);
             Long runid = -1L;
             for (String f : files) {
-                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType(),null);
+                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType(),null, arguments.getJql());
             }
         }
     }
