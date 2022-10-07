@@ -1,32 +1,14 @@
 package com.assertthat.plugins.internal;
 
 import com.google.common.net.UrlEscapers;
-import com.sun.jersey.api.client.*;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.ClientFilter;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.client.apache4.ApacheHttpClient4;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
-import com.sun.jersey.multipart.Boundary;
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.MultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
-import com.sun.jersey.multipart.impl.MultiPartWriter;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpHeaders;
+import okhttp3.*;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import java.io.*;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Logger;
-
-import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 
 /**
  * Copyright (c) 2018 AssertThat
@@ -55,33 +37,37 @@ public class APIUtil {
 
     private final static Logger LOGGER = Logger.getLogger(APIUtil.class.getName());
     private final static String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-    private String accessKey;
-    private String secretKey;
-    private String projectId;
     private String featuresUrl;
     private String reportUrl;
-    private DefaultClientConfig config = new DefaultClientConfig();
+    private OkHttpClient client;
 
-    public APIUtil(String projectId, String accessKey, String secretKey, String proxyURI, String proxyUsername, String proxyPassword, String jiraServerURL) {
-        this.accessKey = accessKey;
-        this.secretKey = secretKey;
-        this.projectId = projectId;
-        if (proxyURI != null && !proxyURI.trim().isEmpty()) {
-            this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyURI", proxyURI);
-        }
-        if (proxyUsername != null && !proxyUsername.trim().isEmpty()) {
-            this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyUsername", proxyUsername);
-        }
-        if (proxyPassword != null && !proxyPassword.trim().isEmpty()) {
-            this.config.getProperties().put("com.sun.jersey.impl.client.httpclient.proxyPassword", proxyPassword);
-        }
-        if(jiraServerURL!=null) {
-            this.featuresUrl = jiraServerURL+"/rest/assertthat/latest/project/"+projectId+"/client/features";
-            this.reportUrl = jiraServerURL+"/rest/assertthat/latest/project/"+projectId+"/client/report";
-        }else{
+    public APIUtil(String projectId, String accessKey, String secretKey, String proxyURI, String proxyUsername, String proxyPassword, String jiraServerURL, boolean ignoreCertErrors) {
+        if (jiraServerURL != null) {
+            this.featuresUrl = jiraServerURL + "/rest/assertthat/latest/project/" + projectId + "/client/features";
+            this.reportUrl = jiraServerURL + "/rest/assertthat/latest/project/" + projectId + "/client/report";
+        } else {
             this.featuresUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/features";
             this.reportUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/report";
         }
+        OkHttpClientBuilder builder = new OkHttpClientBuilder();
+        builder.authenticated(accessKey, secretKey);
+        if (ignoreCertErrors) {
+            builder.ignoringCertificate();
+        }
+        if (proxyURI != null && !proxyURI.trim().isEmpty()) {
+            URL url;
+            try {
+                url = new URL(proxyURI);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException("[ERROR] Parsing proxy URL: " + e.getMessage());
+            }
+            builder.withProxy(url.getHost(), url.getPort());
+        }
+        if (proxyUsername != null && !proxyUsername.trim().isEmpty() && proxyPassword != null
+                && !proxyPassword.trim().isEmpty()) {
+            builder.withProxyAuth(proxyUsername, proxyPassword);
+        }
+        client = builder.build();
     }
 
     public static void copyInputStream(InputStream in, OutputStream out) throws IOException {
@@ -103,97 +89,64 @@ public class APIUtil {
                     f.delete();
                 }
             }
-        }else{
+        } else {
             targetDir.mkdirs();
         }
-        Client client = ApacheHttpClient4.create(config);
-        client.addFilter(new HTTPBasicAuthFilter(this.accessKey, this.secretKey));
-        WebResource webResource = client.resource(this.featuresUrl);
-        MultivaluedMap queryParams = new MultivaluedMapImpl();
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(this.featuresUrl).newBuilder();
         if (mode != null) {
-            queryParams.add("mode", mode.trim());
+            httpBuilder.addQueryParameter("mode", mode.trim());
         }
         if (tags != null) {
-            queryParams.add("tags", tags.trim());
+            httpBuilder.addQueryParameter("tags", tags.trim());
         }
         if (jql != null) {
-            queryParams.add("jql", jql.trim());
+            httpBuilder.addQueryParameter("jql", jql.trim());
         }
-        queryParams.add("numbered", String.valueOf(isNumbered));
-        client.addFilter(new ClientFilter() {
-            @Override
-            public ClientResponse handle(ClientRequest
-                                                 request)
-                    throws ClientHandlerException {
-                request.getHeaders().add(
-                        HttpHeaders.USER_AGENT,
-                        USER_AGENT);
-                return getNext().handle(request);
-            }
-        });
-        ClientResponse response = webResource.queryParams(queryParams).get(ClientResponse.class);
-        if (response.getStatus() != 200) {
-            throw new RuntimeException(response.getStatusInfo().getReasonPhrase());
+        httpBuilder.addQueryParameter("numbered", String.valueOf(isNumbered));
+        Request.Builder request = new Request.Builder().url(httpBuilder.build()).addHeader("User-Agent",
+                USER_AGENT);
+        Response response = client.newCall(request.build()).execute();
+        if (!response.isSuccessful()) {
+            throw new IOException("Failed to download file: " + response);
         }
-        InputStream in = new BufferedInputStream(response.getEntity(InputStream.class));
         File zip = File.createTempFile("arc", ".zip", targetDir);
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(zip));
-        copyInputStream(in, out);
-        out.close();
+        FileOutputStream fos = new FileOutputStream(zip);
+        fos.write(response.body().bytes());
+        fos.close();
         return zip;
     }
 
     public Long upload(Long runId, String runName, String filePath, String type, String metadata, String jql) throws IOException, JSONException {
-        config.getClasses().add(FormDataMultiPart.class);
-        config.getClasses().add(MultiPartWriter.class);
-        Client client = ApacheHttpClient4.create(config);
-        client.addFilter(new HTTPBasicAuthFilter(this.accessKey, this.secretKey));
-        WebResource webResource = client.resource(this.reportUrl);
-        MultivaluedMap queryParams = new MultivaluedMapImpl();
-        queryParams.add("runName", runName);
-        queryParams.add("runId", runId.toString());
-        queryParams.add("type", type);
-        if (jql != null) {
-            queryParams.add("jql", jql.trim());
-        }
-        if(metadata!=null) {
-            queryParams.add("metadata", UrlEscapers.urlFragmentEscaper().escape(metadata));
-        }
-        client.addFilter(new ClientFilter() {
-            @Override
-            public ClientResponse handle(ClientRequest
-                                                 request)
-                    throws ClientHandlerException {
-                request.getHeaders().add(
-                        HttpHeaders.USER_AGENT,
-                        USER_AGENT);
-                return getNext().handle(request);
-            }
-        });
         File fileToUpload = new File(filePath);
-        FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file",
-                fileToUpload,
-                MediaType.APPLICATION_OCTET_STREAM_TYPE);
-        fileDataBodyPart.setContentDisposition(
-                FormDataContentDisposition.name("file")
-                        .fileName(fileToUpload.getName()).build());
-        final MultiPart multiPart = new FormDataMultiPart()
-                .bodyPart(fileDataBodyPart);
-        multiPart.setMediaType(MULTIPART_FORM_DATA_TYPE);
-        ClientResponse response = webResource
-                .queryParams(queryParams)
-                .type(MULTIPART_FORM_DATA_TYPE)
-                .type(Boundary.addBoundary(MULTIPART_FORM_DATA_TYPE))
-                .post(ClientResponse.class, multiPart);
-
-        if (response.getStatus() == 200) {
-            String responseBody = IOUtils.toString(response.getEntityInputStream(), "UTF-8");
-            JSONObject responseJson = new JSONObject(responseBody);
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("file", fileToUpload.getName(),
+                        RequestBody.create(MediaType.parse("application/json"), fileToUpload))
+                .addFormDataPart("some-field", "some-value")
+                .build();
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(this.reportUrl).newBuilder();
+        httpBuilder.addQueryParameter("runName", runName);
+        httpBuilder.addQueryParameter("runId", runId.toString());
+        httpBuilder.addQueryParameter("type", type);
+        if (jql != null) {
+            httpBuilder.addQueryParameter("jql", jql.trim());
+        }
+        if (metadata != null) {
+            httpBuilder.addQueryParameter("metadata", UrlEscapers.urlFragmentEscaper().escape(metadata));
+        }
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(requestBody)
+                .addHeader("User-Agent", USER_AGENT)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            JSONObject responseJson = new JSONObject(response.body().string());
             return Long.valueOf(responseJson.getString("runId"));
         } else {
-            LOGGER.warning(IOUtils.toString(response.getEntityInputStream(), "UTF-8"));
+            LOGGER.warning(response.body().string());
             LOGGER.warning("Failed to process " + filePath);
             return runId;
         }
     }
+
 }

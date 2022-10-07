@@ -128,6 +128,11 @@ public class Main {
         numberedOption.setArgName("true|false");
         options.addOption(numberedOption);
 
+        Option ignoreCertErrors = new Option("e", "ignoreCertErrors", true, "Ignore ssl certificate eerors (default is false)");
+        numberedOption.setRequired(false);
+        numberedOption.setArgName("true|false");
+        options.addOption(ignoreCertErrors);
+
         Option reportOption = new Option("r", "report", false, "Upload report");
         reportOption.setRequired(false);
 
@@ -159,8 +164,12 @@ public class Main {
             System.exit(0);
         }
         boolean isNumbered = true;
-        if(cmd.hasOption("numbered") && cmd.getOptionValue("numbered") !=null && cmd.getOptionValue("numbered").equals("false")){
+        if (cmd.hasOption("numbered") && cmd.getOptionValue("numbered") != null && cmd.getOptionValue("numbered").equals("false")) {
             isNumbered = false;
+        }
+        boolean ignoreCertErrorsVal = false;
+        if (cmd.hasOption("ignoreCertErrors") && cmd.getOptionValue("ignoreCertErrors") != null && cmd.getOptionValue("ignoreCertErrors").equals("true")) {
+            ignoreCertErrorsVal = true;
         }
         Arguments arguments = new Arguments(
                 cmd.getOptionValue("accessKey"),
@@ -178,15 +187,16 @@ public class Main {
                 cmd.getOptionValue("tags"),
                 cmd.getOptionValue("type"),
                 cmd.getOptionValue("jiraServerUrl"),
+                ignoreCertErrorsVal,
                 isNumbered
         );
 
-        APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl());
+        APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl(), ignoreCertErrorsVal);
 
         if (cmd.hasOption("features")) {
             File inZip =
                     apiUtil.download(new File(arguments.getOutputFolder()),
-                            arguments.getMode(), arguments.getJql() ,
+                            arguments.getMode(), arguments.getJql(),
                             arguments.getTags(), arguments.isNumbered());
             File zip = new FileUtil().unpackArchive(inZip, new File(arguments.getOutputFolder()));
             zip.delete();
@@ -195,7 +205,7 @@ public class Main {
             String[] files = new FileUtil().findJsonFiles(new File(arguments.getJsonReportFolder()), arguments.getJsonReportIncludePattern(), null);
             Long runid = -1L;
             for (String f : files) {
-                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType(),null, arguments.getJql());
+                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType(), null, arguments.getJql());
             }
         }
     }

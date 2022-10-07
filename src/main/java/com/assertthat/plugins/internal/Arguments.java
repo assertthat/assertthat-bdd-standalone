@@ -44,6 +44,7 @@ public class Arguments {
     private String type = "cucumber";
     private String tags;
     private boolean numbered;
+    private boolean ignoreCertErrors;
 
     public Arguments(String accessKey,
                      String secretKey,
@@ -60,7 +61,8 @@ public class Arguments {
                      String tags,
                      String type,
                      String jiraServerUrl,
-                     boolean numbered) {
+                     boolean numbered,
+                     boolean ignoreCertErrors) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -70,17 +72,19 @@ public class Arguments {
             this.secretKey = secretKey;
         }
         this.projectId = projectId;
-        if (outputFolder != null) {
+        if (outputFolder != null && !outputFolder.trim().isEmpty()) {
             this.outputFolder = outputFolder;
         }
-        this.jsonReportIncludePattern = jsonReportIncludePattern;
+        if (jsonReportIncludePattern != null && !jsonReportIncludePattern.trim().isEmpty()) {
+            this.jsonReportIncludePattern = jsonReportIncludePattern;
+        }
         this.proxyURI = proxyURI;
         this.proxyPassword = proxyPassword;
         this.proxyUsername = proxyUsername;
         this.jiraServerUrl = jiraServerUrl;
         this.numbered = numbered;
 
-        if (runName != null) {
+        if (runName != null && !runName.isEmpty()) {
             this.runName = runName;
         } else {
             this.runName = "Test run " + new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(new Date());
@@ -98,6 +102,7 @@ public class Arguments {
         }
         this.mode = mode;
         this.jql = jql;
+        this.ignoreCertErrors = ignoreCertErrors;
     }
 
     public Arguments(String accessKey,
@@ -116,11 +121,20 @@ public class Arguments {
                      String type,
                      String jiraServerUrl,
                      String metadata,
-                     boolean numbered) {
-        this(accessKey, secretKey, projectId, runName, outputFolder, jsonReportFolder, jsonReportIncludePattern, proxyURI, proxyUsername, proxyPassword, mode, jql, tags, type, jiraServerUrl, numbered);
+                     boolean numbered,
+                     boolean ignoreCertErrors) {
+        this(accessKey, secretKey, projectId, runName, outputFolder, jsonReportFolder, jsonReportIncludePattern, proxyURI, proxyUsername, proxyPassword, mode, jql, tags, type, jiraServerUrl, numbered, ignoreCertErrors);
         this.metadata = metadata;
 
 
+    }
+
+    public boolean isIgnoreCertErrors() {
+        return ignoreCertErrors;
+    }
+
+    public void setIgnoreCertErrors(boolean ignoreCertErrors) {
+        this.ignoreCertErrors = ignoreCertErrors;
     }
 
     public String getMetadata() {
@@ -253,5 +267,9 @@ public class Arguments {
 
     public boolean isNumbered() {
         return numbered;
+    }
+
+    public void setNumbered(boolean numbered) {
+        this.numbered = numbered;
     }
 }

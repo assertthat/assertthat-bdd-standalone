@@ -5,7 +5,7 @@
 
     <groupId>com.assertthat.plugins</groupId>
     <artifactId>assertthat-bdd-standalone</artifactId>
-    <version>1.9.4</version>
+    <version>1.9.5</version>
     <name>assertthat-bdd-standalone</name>
     <description>AssertThat BDD Jira plugin client standalone</description>
     <url>http://www.assertthat.com</url>
@@ -25,7 +25,7 @@
         <url>https://github.com/assertthat/assertthat-bdd-standalone</url>
         <connection>scm:git:git@github.com:assertthat/assertthat-bdd-standalone.git</connection>
         <developerConnection>scm:git:git@github.com:assertthat/assertthat-bdd-standalone.git</developerConnection>
-        <tag>v1.9.4</tag>
+        <tag>v1.9.5</tag>
   </scm>
     <developers>
         <developer>
@@ -52,19 +52,9 @@
             <version>1.4</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-apache-client4</artifactId>
-            <version>1.19.4</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-tools-ant</artifactId>
             <version>3.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-multipart</artifactId>
-            <version>1.19.4</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jettison</groupId>
@@ -75,6 +65,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>23.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.3.1</version>
         </dependency>
     </dependencies>
 
