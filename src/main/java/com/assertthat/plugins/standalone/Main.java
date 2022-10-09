@@ -1,8 +1,5 @@
-package com.assertthat.plugins.api;
+package com.assertthat.plugins.standalone;
 
-import com.assertthat.plugins.internal.APIUtil;
-import com.assertthat.plugins.internal.Arguments;
-import com.assertthat.plugins.internal.FileUtil;
 import org.apache.commons.cli.*;
 import org.codehaus.jettison.json.JSONException;
 
@@ -40,100 +37,105 @@ public class Main {
 
         Options options = new Options();
 
-        Option accessKeyOption = new Option("a", "accessKey", true, "Access key");
+        Option accessKeyOption = new Option("accessKey",  true, "Access key");
         if (ASSERTTHAT_ACCESS_KEY == null || ASSERTTHAT_ACCESS_KEY.trim().isEmpty()) {
             accessKeyOption.setRequired(true);
         }
         accessKeyOption.setArgName("ASSERTTHAT_ACCESS_KEY");
         options.addOption(accessKeyOption);
 
-        Option secretKeyOption = new Option("s", "secretKey", true, "Secret key");
+        Option secretKeyOption = new Option("secretKey",  true, "Secret key");
         if (ASSERTTHAT_SECRET_KEY == null || ASSERTTHAT_SECRET_KEY.trim().isEmpty()) {
             secretKeyOption.setRequired(true);
         }
         secretKeyOption.setArgName("ASSERTTHAT_SECRET_KEY");
         options.addOption(secretKeyOption);
 
-        Option projectIdOption = new Option("i", "projectId", true, "Jira project id");
+        Option projectIdOption = new Option("projectId",  true, "Jira project id");
         projectIdOption.setRequired(true);
         projectIdOption.setArgName("ID");
         options.addOption(projectIdOption);
 
-        Option runNameOption = new Option("n", "runName", true, "Test run name");
+        Option runNameOption = new Option("runName",  true, "Test run name");
         runNameOption.setRequired(false);
         runNameOption.setArgName("NAME");
         options.addOption(runNameOption);
 
-        Option outputFolderOption = new Option("o", "outputFolder", true, "Features output folder");
+        Option outputFolderOption = new Option("outputFolder",  true, "Features output folder");
         outputFolderOption.setRequired(false);
         outputFolderOption.setArgName("FOLDER PATH");
         options.addOption(outputFolderOption);
 
-        Option jiraServerUrl = new Option("l", "jiraServerUrl", true, "Jira server URL");
+        Option jiraServerUrl = new Option("jiraServerUrl",  true, "Jira server URL");
         outputFolderOption.setRequired(false);
         outputFolderOption.setArgName("JIRA SERVER URL");
         options.addOption(jiraServerUrl);
 
-        Option inputFolderOption = new Option("j", "jsonReportFolder", true, "Cucumber json files folder");
+        Option inputFolderOption = new Option("jsonReportFolder",  true, "Cucumber json files folder");
         inputFolderOption.setRequired(false);
         inputFolderOption.setArgName("FOLDER PATH");
         options.addOption(inputFolderOption);
 
-        Option jsonPatternOption = new Option("t", "jsonReportIncludePattern", true, "Pattern for json file names");
+        Option jsonPatternOption = new Option("jsonReportIncludePattern",  true, "Pattern for json file names");
         jsonPatternOption.setRequired(false);
         jsonPatternOption.setArgName("PATTERN");
         options.addOption(jsonPatternOption);
 
-        Option proxyURLOption = new Option("x", "proxyURI", true, "Proxy URI");
+        Option proxyURLOption = new Option("proxyURI",  true, "Proxy URI");
         proxyURLOption.setRequired(false);
         proxyURLOption.setArgName("URI");
         options.addOption(proxyURLOption);
 
-        Option proxyUsernameOption = new Option("u", "proxyUsername", true, "Proxy username");
+        Option proxyUsernameOption = new Option("proxyUsername",  true, "Proxy username");
         proxyUsernameOption.setRequired(false);
         proxyUsernameOption.setArgName("USERNAME");
         options.addOption(proxyUsernameOption);
 
-        Option proxyPasswordOption = new Option("p", "proxyPassword", true, "Proxy password");
+        Option proxyPasswordOption = new Option("proxyPassword",  true, "Proxy password");
         proxyPasswordOption.setRequired(false);
         proxyPasswordOption.setArgName("PASSWORD");
         options.addOption(proxyPasswordOption);
 
-        Option modeOption = new Option("m", "mode", true, "Features to download");
+        Option modeOption = new Option("mode",  true, "Features to download");
         modeOption.setRequired(false);
         modeOption.setArgName("automated|manual|both");
         options.addOption(modeOption);
 
-        Option jqlOption = new Option("q", "jql", true, "JQL filter for features and Jira ticket to be updated with report upload");
+        Option jqlOption = new Option("jql", true, "JQL filter for features and Jira ticket to be updated with report upload");
         jqlOption.setRequired(false);
         jqlOption.setArgName("JQL");
         options.addOption(jqlOption);
 
-        Option tagsOption = new Option("b", "tags", true, "Tags filter for " +
+        Option tagsOption = new Option("tags", true, "Tags filter for " +
                 "scenarios");
         tagsOption.setRequired(false);
         tagsOption.setArgName("tags");
         options.addOption(tagsOption);
 
-        Option typeOption = new Option("k", "type", true, "Report type");
+        Option typeOption = new Option("type", true, "Report type");
         typeOption.setRequired(false);
         typeOption.setArgName("cucumber|karate");
         options.addOption(typeOption);
 
-        Option featuresOption = new Option("f", "features", false, "Download features");
+        Option metadataOption = new Option("metadata", true, "Report metadata json");
+        metadataOption.setRequired(false);
+        metadataOption.setArgName("{ \"key\" : \"value\"}");
+        options.addOption(metadataOption);
+
+        Option featuresOption = new Option("features",  false, "Download features");
         featuresOption.setRequired(false);
 
-        Option numberedOption = new Option("d", "numbered", true, "Prepend ordinal to feature name (default is true)");
+        Option numberedOption = new Option("numbered", true, "Prepend ordinal to feature name (default is true)");
         numberedOption.setRequired(false);
         numberedOption.setArgName("true|false");
         options.addOption(numberedOption);
 
-        Option ignoreCertErrors = new Option("e", "ignoreCertErrors", true, "Ignore ssl certificate eerors (default is false)");
+        Option ignoreCertErrors = new Option("ignoreCertErrors",  true, "Ignore ssl certificate eerors (default is false)");
         numberedOption.setRequired(false);
         numberedOption.setArgName("true|false");
         options.addOption(ignoreCertErrors);
 
-        Option reportOption = new Option("r", "report", false, "Upload report");
+        Option reportOption = new Option("report", false, "Upload report");
         reportOption.setRequired(false);
 
         Option helpOption = new Option("h", "help", false, "Display help");
@@ -151,16 +153,17 @@ public class Main {
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd = null;
-
+        Package mainPackage = Main.class.getPackage();
+        String version = mainPackage.getImplementationVersion();
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             System.err.println(e.getMessage());
-            formatter.printHelp("assertthat-bdd-standalone-1.3.jar", options);
+            formatter.printHelp(String.format("assertthat-bdd-standalone-%s.jar", version), options);
             System.exit(1);
         }
         if (cmd.hasOption("help")) {
-            formatter.printHelp("assertthat-bdd-standalone-1.3.jar", options);
+            formatter.printHelp(String.format("assertthat-bdd-standalone-%s.jar", version), options);
             System.exit(0);
         }
         boolean isNumbered = true;
@@ -187,6 +190,7 @@ public class Main {
                 cmd.getOptionValue("tags"),
                 cmd.getOptionValue("type"),
                 cmd.getOptionValue("jiraServerUrl"),
+                cmd.getOptionValue("metadata"),
                 ignoreCertErrorsVal,
                 isNumbered
         );
@@ -205,7 +209,7 @@ public class Main {
             String[] files = new FileUtil().findJsonFiles(new File(arguments.getJsonReportFolder()), arguments.getJsonReportIncludePattern(), null);
             Long runid = -1L;
             for (String f : files) {
-                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType(), null, arguments.getJql());
+                runid = apiUtil.upload(runid, arguments.getRunName(), arguments.getJsonReportFolder() + f, arguments.getType(), arguments.getMetadata(), arguments.getJql());
             }
         }
     }

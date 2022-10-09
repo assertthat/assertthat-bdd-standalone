@@ -165,7 +165,8 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>com.assertthat.plugins.api.Main</mainClass>
+                                <mainClass>com.assertthat.plugins.standalone.Main</mainClass>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             </manifest>
                         </archive>
                         <descriptorRefs>

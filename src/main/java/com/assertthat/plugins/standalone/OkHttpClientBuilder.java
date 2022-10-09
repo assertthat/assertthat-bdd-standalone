@@ -1,4 +1,4 @@
-package com.assertthat.plugins.internal;
+package com.assertthat.plugins.standalone;
 
 
 import okhttp3.*;
@@ -10,17 +10,20 @@ import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.util.logging.Logger;
 
-public class OkHttpClientBuilder {
+class OkHttpClientBuilder {
+
+    private final static Logger LOGGER = Logger.getLogger(APIUtil.class.getName());
 
     private OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-    public OkHttpClientBuilder authenticated(String username, String password) {
+    OkHttpClientBuilder authenticated(String username, String password) {
         builder.addInterceptor(new BasicAuthInterceptor(username, password));
         return this;
     }
 
-    public OkHttpClientBuilder ignoringCertificate() {
+    OkHttpClientBuilder ignoringCertificate() {
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[]{
@@ -48,30 +51,28 @@ public class OkHttpClientBuilder {
             builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier((hostname, session) -> true);
         } catch (Exception e) {
+            LOGGER.severe("Error configuring ssl socket factory: " + e.getMessage());
         }
         return this;
     }
 
-    public OkHttpClientBuilder withProxy(String proxyHost, int proxyPort) {
+    OkHttpClientBuilder withProxy(String proxyHost, int proxyPort) {
         builder.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort)));
         return this;
     }
 
-    public OkHttpClientBuilder withProxyAuth(String username, String password) {
-        Authenticator proxyAuthenticator = new Authenticator() {
-            @Override
-            public Request authenticate(Route route, Response response) throws IOException {
-                String credential = Credentials.basic(username, password);
-                return response.request().newBuilder()
-                        .header("Proxy-Authorization", credential)
-                        .build();
-            }
+    OkHttpClientBuilder withProxyAuth(String username, String password) {
+        Authenticator proxyAuthenticator = (route, response) -> {
+            String credential = Credentials.basic(username, password);
+            return response.request().newBuilder()
+                    .header("Proxy-Authorization", credential)
+                    .build();
         };
         builder.proxyAuthenticator(proxyAuthenticator);
         return this;
     }
 
-    public OkHttpClient build(){
+    OkHttpClient build(){
         return builder.build();
     }
 
@@ -79,7 +80,7 @@ public class OkHttpClientBuilder {
 
         private String credentials;
 
-        public BasicAuthInterceptor(String user, String password) {
+        BasicAuthInterceptor(String user, String password) {
             this.credentials = Credentials.basic(user, password);
         }
 

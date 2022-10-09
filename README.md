@@ -20,28 +20,35 @@ Main features are:
 ## Usage
 
 ```
-java -jar assertthat-bdd-standalone-1.9.4.jar
+java -jar assertthat-bdd-standalone-1.9.5.jar
 
-Required options: a, s, i, [-f Download features, -r Upload report]
+Required options: accessKey, secretKey, projectId, [-features Download features, -report Upload report]
 
-usage: assertthat-bdd-standalone-1.6.jar
- -a,--accessKey <ASSERTTHAT_ACCESS_KEY>    Access key
- -f,--features                             Download features
- -h,--help                                 Display help
- -i,--projectId <ID>                       Jira project id
- -j,--jsonReportFolder <FOLDER PATH>       Cucumber json files folder
- -m,--mode <automated|manual|both>         Features to download
- -n,--runName <NAME>                       Test run name
- -o,--outputFolder <FOLDER PATH>           Features output folder
- -p,--proxyPassword <PASSWORD>             Proxy password
- -q,--jql <JQL>                            JQL filter for features download and Jira issues to be updated with test results
- -b,--tags <tags expression>               Tags expression for scenarios filtering
- -r,--report                               Upload report
- -s,--secretKey <ASSERTTHAT_SECRET_KEY>    Secret key
- -k,--type <cucumber|karate>               Report type
- -t,--jsonReportIncludePattern <PATTERN>   Pattern for json file names
- -u,--proxyUsername <USERNAME>             Proxy username
- -x,--proxyURI <URI>                       Proxy URI
- -l,--jiraServerUrl <URI>                  Jira Server URL
- -d,--numbered <true|false>                Prepend ordinal to feature name (default is true)
+usage: assertthat-bdd-standalone-1.9.5.jar
+ -accessKey <ASSERTTHAT_ACCESS_KEY>    Access key
+ -features                             Download features
+ -h,--help                             Display help
+ -ignoreCertErrors <arg>               Ignore ssl certificate eerors
+                                       (default is false)
+ -jiraServerUrl <arg>                  Jira server URL
+ -jql <JQL>                            JQL filter for features and Jira
+                                       ticket to be updated with report
+                                       upload
+ -jsonReportFolder <FOLDER PATH>       Cucumber json files folder
+ -jsonReportIncludePattern <PATTERN>   Pattern for json file names
+ -metadata <{ "key" : "value"}>        Report metadata json
+ -mode <automated|manual|both>         Features to download
+ -numbered <true|false>                Prepend ordinal to feature name
+                                       (default is true)
+ -outputFolder <JIRA SERVER URL>       Features output folder
+ -projectId <ID>                       Jira project id
+ -proxyPassword <PASSWORD>             Proxy password
+ -proxyURI <URI>                       Proxy URI
+ -proxyUsername <USERNAME>             Proxy username
+ -report                               Upload report
+ -runName <NAME>                       Test run name
+ -secretKey <ASSERTTHAT_SECRET_KEY>    Secret key
+ -tags <tags>                          Tags filter for scenarios
+ -type <cucumber|karate>               Report type
+
 ```

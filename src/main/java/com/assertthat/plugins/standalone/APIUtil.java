@@ -1,4 +1,4 @@
-package com.assertthat.plugins.internal;
+package com.assertthat.plugins.standalone;
 
 import com.google.common.net.UrlEscapers;
 import okhttp3.*;
@@ -68,17 +68,6 @@ public class APIUtil {
             builder.withProxyAuth(proxyUsername, proxyPassword);
         }
         client = builder.build();
-    }
-
-    public static void copyInputStream(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int len = in.read(buffer);
-        while (len >= 0) {
-            out.write(buffer, 0, len);
-            len = in.read(buffer);
-        }
-        in.close();
-        out.close();
     }
 
     public File download(File targetDir, String mode, String jql,

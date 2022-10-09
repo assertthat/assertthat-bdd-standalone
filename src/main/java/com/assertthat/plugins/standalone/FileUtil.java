@@ -1,4 +1,4 @@
-package com.assertthat.plugins.internal;
+package com.assertthat.plugins.standalone;
 
 import org.codehaus.plexus.util.DirectoryScanner;
 
@@ -78,7 +78,7 @@ public class FileUtil {
     }
 
 
-    public void copyInputStream(InputStream in, OutputStream out) throws IOException {
+    private void copyInputStream(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int len = in.read(buffer);
         while (len >= 0) {
@@ -89,7 +89,7 @@ public class FileUtil {
         out.close();
     }
 
-    public boolean buildDirectory(File file) {
+    private boolean buildDirectory(File file) {
         return file.exists() || file.mkdirs();
     }
 }

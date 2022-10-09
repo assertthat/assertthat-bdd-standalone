@@ -1,4 +1,4 @@
-package com.assertthat.plugins.internal;
+package com.assertthat.plugins.standalone;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,23 +46,24 @@ public class Arguments {
     private boolean numbered;
     private boolean ignoreCertErrors;
 
-    public Arguments(String accessKey,
-                     String secretKey,
-                     String projectId,
-                     String runName,
-                     String outputFolder,
-                     String jsonReportFolder,
-                     String jsonReportIncludePattern,
-                     String proxyURI,
-                     String proxyUsername,
-                     String proxyPassword,
-                     String mode,
-                     String jql,
-                     String tags,
-                     String type,
-                     String jiraServerUrl,
-                     boolean numbered,
-                     boolean ignoreCertErrors) {
+    Arguments(String accessKey,
+              String secretKey,
+              String projectId,
+              String runName,
+              String outputFolder,
+              String jsonReportFolder,
+              String jsonReportIncludePattern,
+              String proxyURI,
+              String proxyUsername,
+              String proxyPassword,
+              String mode,
+              String jql,
+              String tags,
+              String type,
+              String jiraServerUrl,
+              String metadata,
+              boolean numbered,
+              boolean ignoreCertErrors) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -89,11 +90,15 @@ public class Arguments {
         } else {
             this.runName = "Test run " + new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(new Date());
         }
-        if (type != null) {
+        if (type != null && !type.isEmpty()) {
             this.type = type;
         }
-        if (tags != null) {
+        if (tags != null && !tags.isEmpty()) {
             this.tags = tags;
+        }
+
+        if (metadata != null && !metadata.isEmpty()) {
+            this.metadata = metadata;
         }
 
         if (jsonReportFolder != null && !jsonReportFolder.trim().isEmpty()) {
@@ -103,30 +108,6 @@ public class Arguments {
         this.mode = mode;
         this.jql = jql;
         this.ignoreCertErrors = ignoreCertErrors;
-    }
-
-    public Arguments(String accessKey,
-                     String secretKey,
-                     String projectId,
-                     String runName,
-                     String outputFolder,
-                     String jsonReportFolder,
-                     String jsonReportIncludePattern,
-                     String proxyURI,
-                     String proxyUsername,
-                     String proxyPassword,
-                     String mode,
-                     String jql,
-                     String tags,
-                     String type,
-                     String jiraServerUrl,
-                     String metadata,
-                     boolean numbered,
-                     boolean ignoreCertErrors) {
-        this(accessKey, secretKey, projectId, runName, outputFolder, jsonReportFolder, jsonReportIncludePattern, proxyURI, proxyUsername, proxyPassword, mode, jql, tags, type, jiraServerUrl, numbered, ignoreCertErrors);
-        this.metadata = metadata;
-
-
     }
 
     public boolean isIgnoreCertErrors() {
