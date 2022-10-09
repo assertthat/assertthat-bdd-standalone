@@ -25,11 +25,11 @@
         <url>https://github.com/assertthat/assertthat-bdd-standalone</url>
         <connection>scm:git:git@github.com:assertthat/assertthat-bdd-standalone.git</connection>
         <developerConnection>scm:git:git@github.com:assertthat/assertthat-bdd-standalone.git</developerConnection>
-        <tag>v1.9.5</tag>
+        <tag>v1.9.6</tag>
   </scm>
     <developers>
         <developer>
-            <id>glib-briia</id>
+            <id>glibas</id>
             <name>Glib Briia</name>
             <email>glib@assertthat.com</email>
         </developer>
