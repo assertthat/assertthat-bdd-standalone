@@ -20,11 +20,11 @@ Main features are:
 ## Usage
 
 ```
-java -jar assertthat-bdd-standalone-1.9.5.jar
+java -jar assertthat-bdd-standalone-1.9.6.jar
 
 Required options: accessKey, secretKey, projectId, [-features Download features, -report Upload report]
 
-usage: assertthat-bdd-standalone-1.9.5.jar
+usage: assertthat-bdd-standalone-1.9.6.jar
  -accessKey <ASSERTTHAT_ACCESS_KEY>    Access key
  -features                             Download features
  -h,--help                             Display help
