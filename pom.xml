@@ -5,7 +5,7 @@
 
     <groupId>com.assertthat.plugins</groupId>
     <artifactId>assertthat-bdd-standalone</artifactId>
-    <version>1.9.7-SNAPSHOT</version>
+    <version>1.9.7</version>
     <name>assertthat-bdd-standalone</name>
     <description>AssertThat BDD Jira plugin client standalone</description>
     <url>http://www.assertthat.com</url>
@@ -39,12 +39,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>
