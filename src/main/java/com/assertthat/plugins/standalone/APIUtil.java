@@ -1,6 +1,5 @@
 package com.assertthat.plugins.standalone;
 
-import com.google.common.net.UrlEscapers;
 import okhttp3.*;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -8,6 +7,7 @@ import org.codehaus.jettison.json.JSONObject;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Logger;
 
 /**
@@ -120,7 +120,7 @@ public class APIUtil {
             httpBuilder.addQueryParameter("jql", jql.trim());
         }
         if (metadata != null) {
-            httpBuilder.addQueryParameter("metadata", UrlEscapers.urlFragmentEscaper().escape(metadata));
+            httpBuilder.addQueryParameter("metadata", URLEncoder.encode(metadata, "UTF-8"));
         }
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
