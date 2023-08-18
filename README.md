@@ -30,6 +30,8 @@ usage: assertthat-bdd-standalone-1.9.6.jar
  -h,--help                             Display help
  -ignoreCertErrors <arg>               Ignore ssl certificate eerors
                                        (default is false)
+ -cleanupFeatures <arg>                Delete features in outputFolder before download
+                                       (default is true)                                       
  -jiraServerUrl <arg>                  Jira server URL
  -jql <JQL>                            JQL filter for features and Jira
                                        ticket to be updated with report

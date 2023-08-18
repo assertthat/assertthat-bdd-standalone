@@ -131,9 +131,14 @@ public class Main {
         options.addOption(numberedOption);
 
         Option ignoreCertErrors = new Option("ignoreCertErrors",  true, "Ignore ssl certificate eerors (default is false)");
-        numberedOption.setRequired(false);
-        numberedOption.setArgName("true|false");
+        ignoreCertErrors.setRequired(false);
+        ignoreCertErrors.setArgName("true|false");
         options.addOption(ignoreCertErrors);
+
+        Option cleanupFeatures = new Option("cleanupFeatures",  true, "Delete features in outputFolder directory before downloading");
+        cleanupFeatures.setRequired(false);
+        cleanupFeatures.setArgName("true|false");
+        options.addOption(cleanupFeatures);
 
         Option reportOption = new Option("report", false, "Upload report");
         reportOption.setRequired(false);
@@ -174,6 +179,10 @@ public class Main {
         if (cmd.hasOption("ignoreCertErrors") && cmd.getOptionValue("ignoreCertErrors") != null && cmd.getOptionValue("ignoreCertErrors").equals("true")) {
             ignoreCertErrorsVal = true;
         }
+        boolean cleanupFeaturesVal = false;
+        if (cmd.hasOption("cleanupFeatures") && cmd.getOptionValue("cleanupFeatures") != null && cmd.getOptionValue("cleanupFeatures").equals("true")) {
+            cleanupFeaturesVal = true;
+        }
         Arguments arguments = new Arguments(
                 cmd.getOptionValue("accessKey"),
                 cmd.getOptionValue("secretKey"),
@@ -192,7 +201,8 @@ public class Main {
                 cmd.getOptionValue("jiraServerUrl"),
                 cmd.getOptionValue("metadata"),
                 ignoreCertErrorsVal,
-                isNumbered
+                isNumbered,
+                cleanupFeaturesVal
         );
 
         APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl(), ignoreCertErrorsVal);
@@ -201,7 +211,7 @@ public class Main {
             File inZip =
                     apiUtil.download(new File(arguments.getOutputFolder()),
                             arguments.getMode(), arguments.getJql(),
-                            arguments.getTags(), arguments.isNumbered());
+                            arguments.getTags(), arguments.isNumbered(), arguments.isCleanupFeatures());
             File zip = new FileUtil().unpackArchive(inZip, new File(arguments.getOutputFolder()));
             zip.delete();
         }

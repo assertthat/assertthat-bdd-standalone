@@ -14,7 +14,8 @@ public class ArgumentsFeatures extends Arguments{
                      String tags,
                      String jiraServerUrl,
                      boolean numbered,
-                     boolean ignoreCertErrors) {
+                     boolean ignoreCertErrors,
+                     boolean cleanupFeatures) {
         super(accessKey,
                 secretKey,
                 projectId,
@@ -32,6 +33,7 @@ public class ArgumentsFeatures extends Arguments{
                 jiraServerUrl,
                 null,
                 numbered,
-                ignoreCertErrors);
+                ignoreCertErrors,
+                cleanupFeatures);
     }
 }

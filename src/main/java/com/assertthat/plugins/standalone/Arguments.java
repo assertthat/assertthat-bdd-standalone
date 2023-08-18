@@ -46,6 +46,8 @@ public class Arguments {
     private boolean numbered;
     private boolean ignoreCertErrors;
 
+    private boolean cleanupFeatures = true;
+
     Arguments(String accessKey,
               String secretKey,
               String projectId,
@@ -63,7 +65,8 @@ public class Arguments {
               String jiraServerUrl,
               String metadata,
               boolean numbered,
-              boolean ignoreCertErrors) {
+              boolean ignoreCertErrors,
+              boolean cleanupFeatures) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
@@ -108,6 +111,7 @@ public class Arguments {
         this.mode = mode;
         this.jql = jql;
         this.ignoreCertErrors = ignoreCertErrors;
+        this.cleanupFeatures = cleanupFeatures;
     }
 
     public boolean isIgnoreCertErrors() {
@@ -252,5 +256,13 @@ public class Arguments {
 
     public void setNumbered(boolean numbered) {
         this.numbered = numbered;
+    }
+
+    public boolean isCleanupFeatures() {
+        return cleanupFeatures;
+    }
+
+    public void setCleanupFeatures(boolean cleanupFeatures) {
+        this.cleanupFeatures = cleanupFeatures;
     }
 }

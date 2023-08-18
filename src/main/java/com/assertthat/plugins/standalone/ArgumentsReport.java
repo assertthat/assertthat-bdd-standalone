@@ -34,7 +34,8 @@ public class ArgumentsReport extends Arguments{
                 jiraServerUrl,
                 metadata,
                 false,
-                ignoreCertErrors);
+                ignoreCertErrors,
+                false);
 
     }
 }

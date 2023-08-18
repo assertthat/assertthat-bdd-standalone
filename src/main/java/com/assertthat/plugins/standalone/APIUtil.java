@@ -71,8 +71,8 @@ public class APIUtil {
     }
 
     public File download(File targetDir, String mode, String jql,
-                         String tags, boolean isNumbered) throws IOException {
-        if (targetDir.exists()) {
+                         String tags, boolean isNumbered, boolean cleanupFeatures) throws IOException {
+        if (cleanupFeatures && targetDir.exists()) {
             for (File f : targetDir.listFiles()) {
                 if (f.getName().endsWith(".feature")) {
                     f.delete();
