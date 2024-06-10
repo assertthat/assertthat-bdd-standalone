@@ -5,7 +5,7 @@
 
     <groupId>com.assertthat.plugins</groupId>
     <artifactId>assertthat-bdd-standalone</artifactId>
-    <version>1.9.8</version>
+    <version>1.9.9</version>
     <name>assertthat-bdd-standalone</name>
     <description>AssertThat BDD Jira plugin client standalone</description>
     <url>http://www.assertthat.com</url>
@@ -38,17 +38,17 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <version>2.16.1</version>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
-            <version>1.4</version>
+            <version>1.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-tools-ant</artifactId>
-            <version>3.6.0</version>
+            <version>3.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jettison</groupId>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.3.1</version>
+            <version>4.12.0</version>
         </dependency>
     </dependencies>
 
