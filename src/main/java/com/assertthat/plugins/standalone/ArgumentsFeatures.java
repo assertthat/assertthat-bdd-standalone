@@ -4,6 +4,7 @@ public class ArgumentsFeatures extends Arguments{
 
     public ArgumentsFeatures(String accessKey,
                      String secretKey,
+                     String token,
                      String projectId,
                      String outputFolder,
                      String proxyURI,
@@ -18,6 +19,7 @@ public class ArgumentsFeatures extends Arguments{
                      boolean cleanupFeatures) {
         super(accessKey,
                 secretKey,
+                token,
                 projectId,
                 null,
                 outputFolder,

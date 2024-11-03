@@ -43,6 +43,7 @@ public class Arguments {
     private String jiraServerUrl;
     private String type = "cucumber";
     private String tags;
+    private String token;
     private boolean numbered;
     private boolean ignoreCertErrors;
 
@@ -50,6 +51,7 @@ public class Arguments {
 
     Arguments(String accessKey,
               String secretKey,
+              String token,
               String projectId,
               String runName,
               String outputFolder,
@@ -69,11 +71,15 @@ public class Arguments {
               boolean cleanupFeatures) {
         this.accessKey = System.getenv("ASSERTTHAT_ACCESS_KEY");
         this.secretKey = System.getenv("ASSERTTHAT_SECRET_KEY");
+        this.token = System.getenv("ASSERTTHAT_TOKEN");
         if (accessKey != null && !accessKey.trim().isEmpty()) {
             this.accessKey = accessKey;
         }
         if (secretKey != null && !secretKey.trim().isEmpty()) {
             this.secretKey = secretKey;
+        }
+        if (token != null && !token.trim().isEmpty()) {
+            this.token = token;
         }
         this.projectId = projectId;
         if (outputFolder != null && !outputFolder.trim().isEmpty()) {
@@ -264,5 +270,13 @@ public class Arguments {
 
     public void setCleanupFeatures(boolean cleanupFeatures) {
         this.cleanupFeatures = cleanupFeatures;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

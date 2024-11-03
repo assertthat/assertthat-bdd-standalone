@@ -34,6 +34,7 @@ public class Main {
     public static void main(String[] args) throws IOException, JSONException {
         String ASSERTTHAT_ACCESS_KEY = System.getenv("ASSERTTHAT_ACCESS_KEY");
         String ASSERTTHAT_SECRET_KEY = System.getenv("ASSERTTHAT_SECRET_KEY");
+        String ASSERTTHAT_TOKEN = System.getenv("ASSERTTHAT_TOKEN");
 
         Options options = new Options();
 
@@ -50,6 +51,13 @@ public class Main {
         }
         secretKeyOption.setArgName("ASSERTTHAT_SECRET_KEY");
         options.addOption(secretKeyOption);
+
+        Option tokenOption = new Option("token",  true, "API token");
+        if (ASSERTTHAT_TOKEN == null || ASSERTTHAT_TOKEN.trim().isEmpty()) {
+            tokenOption.setRequired(true);
+        }
+        tokenOption.setArgName("ASSERTTHAT_TOKEN");
+        options.addOption(tokenOption);
 
         Option projectIdOption = new Option("projectId",  true, "Jira project id");
         projectIdOption.setRequired(true);
@@ -186,6 +194,7 @@ public class Main {
         Arguments arguments = new Arguments(
                 cmd.getOptionValue("accessKey"),
                 cmd.getOptionValue("secretKey"),
+                cmd.getOptionValue("token"),
                 cmd.getOptionValue("projectId"),
                 cmd.getOptionValue("runName"),
                 cmd.getOptionValue("outputFolder"),
@@ -205,7 +214,7 @@ public class Main {
                 cleanupFeaturesVal
         );
 
-        APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl(), ignoreCertErrorsVal);
+        APIUtil apiUtil = new APIUtil(arguments.getProjectId(), arguments.getAccessKey(), arguments.getSecretKey(), arguments.getToken(), arguments.getProxyURI(), arguments.getProxyUsername(), arguments.getProxyPassword(), arguments.getJiraServerUrl(), ignoreCertErrorsVal);
 
         if (cmd.hasOption("features")) {
             File inZip =

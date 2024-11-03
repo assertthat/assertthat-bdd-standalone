@@ -41,7 +41,7 @@ public class APIUtil {
     private String reportUrl;
     private OkHttpClient client;
 
-    public APIUtil(String projectId, String accessKey, String secretKey, String proxyURI, String proxyUsername, String proxyPassword, String jiraServerURL, boolean ignoreCertErrors) {
+    public APIUtil(String projectId, String accessKey, String secretKey, String token, String proxyURI, String proxyUsername, String proxyPassword, String jiraServerURL, boolean ignoreCertErrors) {
         if (jiraServerURL != null) {
             this.featuresUrl = jiraServerURL + "/rest/assertthat/latest/project/" + projectId + "/client/features";
             this.reportUrl = jiraServerURL + "/rest/assertthat/latest/project/" + projectId + "/client/report";
@@ -50,7 +50,8 @@ public class APIUtil {
             this.reportUrl = "https://bdd.assertthat.app/rest/api/1/project/" + projectId + "/report";
         }
         OkHttpClientBuilder builder = new OkHttpClientBuilder();
-        builder.authenticated(accessKey, secretKey);
+        builder.authenticated(accessKey, secretKey, token);
+
         if (ignoreCertErrors) {
             builder.ignoringCertificate();
         }
@@ -110,7 +111,6 @@ public class APIUtil {
         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("file", fileToUpload.getName(),
                         RequestBody.create(MediaType.parse("application/json"), fileToUpload))
-                .addFormDataPart("some-field", "some-value")
                 .build();
         HttpUrl.Builder httpBuilder = HttpUrl.parse(this.reportUrl).newBuilder();
         httpBuilder.addQueryParameter("runName", runName);

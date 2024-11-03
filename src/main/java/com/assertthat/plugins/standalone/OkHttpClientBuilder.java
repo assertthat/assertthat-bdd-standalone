@@ -18,8 +18,8 @@ class OkHttpClientBuilder {
 
     private OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-    OkHttpClientBuilder authenticated(String username, String password) {
-        builder.addInterceptor(new BasicAuthInterceptor(username, password));
+    OkHttpClientBuilder authenticated(String username, String password, String token) {
+        builder.addInterceptor(token != null? new TokenAuthInterceptor(token) : new BasicAuthInterceptor(username, password));
         return this;
     }
 
@@ -89,6 +89,24 @@ class OkHttpClientBuilder {
             Request request = chain.request();
             Request authenticatedRequest = request.newBuilder()
                     .header("Authorization", credentials).build();
+            return chain.proceed(authenticatedRequest);
+        }
+
+    }
+
+    class TokenAuthInterceptor implements Interceptor {
+
+        private String token;
+
+        TokenAuthInterceptor(String token) {
+            this.token = token;
+        }
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            Request authenticatedRequest = request.newBuilder()
+                    .header("Authorization", "Bearer " + token).build();
             return chain.proceed(authenticatedRequest);
         }
 

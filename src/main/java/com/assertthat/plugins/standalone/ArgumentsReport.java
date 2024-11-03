@@ -4,6 +4,7 @@ public class ArgumentsReport extends Arguments{
 
     public ArgumentsReport(String accessKey,
                      String secretKey,
+                     String token,
                      String projectId,
                      String runName,
                      String jsonReportFolder,
@@ -19,6 +20,7 @@ public class ArgumentsReport extends Arguments{
 
         super(accessKey,
                 secretKey,
+                token,
                 projectId,
                 runName,
                 null,
