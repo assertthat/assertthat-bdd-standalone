@@ -93,7 +93,7 @@ public class APIUtil {
         }
         httpBuilder.addQueryParameter("numbered", String.valueOf(isNumbered));
         Request.Builder request = new Request.Builder().url(httpBuilder.build()).addHeader("User-Agent",
-                USER_AGENT);
+                USER_AGENT).addHeader("X-Atlassian-Token", "no-check");
         Response response = client.newCall(request.build()).execute();
         if (!response.isSuccessful()) {
             throw new IOException("Failed to download file: " + response);
@@ -126,6 +126,7 @@ public class APIUtil {
                 .url(httpBuilder.build())
                 .post(requestBody)
                 .addHeader("User-Agent", USER_AGENT)
+                .addHeader("X-Atlassian-Token", "no-check")
                 .build();
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
