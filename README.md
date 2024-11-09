@@ -20,11 +20,11 @@ Main features are:
 ## Usage
 
 ```
-java -jar assertthat-bdd-standalone-1.9.11.jar
+java -jar assertthat-bdd-standalone-1.9.12.jar
 
 Required options: accessKey, secretKey, projectId, [-features Download features, -report Upload report]
 
-usage: assertthat-bdd-standalone-1.9.11.jar
+usage: assertthat-bdd-standalone-1.9.12.jar
  -accessKey <ASSERTTHAT_ACCESS_KEY>    Access key
  -secretKey <ASSERTTHAT_SECRET_KEY>    Secret key
  -token <ASSERTTHAT_TOKEN>             Jira API token (for DataCenter only) as an alternative to basic auth
