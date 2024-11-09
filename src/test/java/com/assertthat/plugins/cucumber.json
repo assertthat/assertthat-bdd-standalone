@@ -1,0 +1,148 @@
+[
+  {
+    "line": 3,
+    "elements": [
+      {
+        "start_timestamp": "2024-11-09T20:17:45.361Z",
+        "before": [
+          {
+            "result": {
+              "duration": 6093041200,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.assertthat.StepDefinition.beforeScenario(io.cucumber.java.Scenario)"
+            }
+          }
+        ],
+        "line": 8,
+        "name": "Any member of the team can easily add and edit acceptance tests for user stories",
+        "description": "",
+        "id": "add-acceptance-tests-to-my-user-stories-with-assertthat-for-jira;any-member-of-the-team-can-easily-add-and-edit-acceptance-tests-for-user-stories",
+        "after": [
+          {
+            "result": {
+              "duration": 1265791100,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.assertthat.StepDefinition.teardown()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "status": "undefined"
+            },
+            "line": 10,
+            "name": "I navigate to a user story in Jira",
+            "match": {},
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 11,
+            "name": "I link multiple scenarios from feature files to the user story",
+            "match": {},
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 12,
+            "name": "I amend the scenarios from within the story",
+            "match": {},
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 13,
+            "name": "scenarios can be managed to ensure better collaboration for my team",
+            "match": {},
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 14,
+            "name": "an existing feature with multiple scenarios",
+            "match": {},
+            "keyword": "When "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@syntax-validation"
+          },
+          {
+            "name": "@import-automated-tests"
+          },
+          {
+            "name": "@sdads"
+          },
+          {
+            "name": "@AUTOMATED"
+          },
+          {
+            "name": "@add-scenarios"
+          },
+          {
+            "name": "@link-scenarios-stories"
+          },
+          {
+            "name": "@edit-scenarios"
+          },
+          {
+            "name": "@DEMO-2"
+          },
+          {
+            "name": "@DEMO-3"
+          },
+          {
+            "name": "@DEMO-24"
+          }
+        ]
+      }
+    ],
+    "name": "Add acceptance tests to my user stories with AssertThat for Jira",
+    "description": "    AssertThat for Jira provides the tools to manage acceptance tests into features and scenarios and seamlessly integrate with the user stories in Jira, enabling the team to work in partnership on projects.",
+    "id": "add-acceptance-tests-to-my-user-stories-with-assertthat-for-jira",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/com/assertthat/features/add-acceptance-tests-to-my-user-stories-with-assertthat-for-jira.feature",
+    "tags": [
+      {
+        "name": "@syntax-validation",
+        "type": "Tag",
+        "location": {
+          "line": 2,
+          "column": 1
+        }
+      },
+      {
+        "name": "@import-automated-tests",
+        "type": "Tag",
+        "location": {
+          "line": 2,
+          "column": 23
+        }
+      },
+      {
+        "name": "@sdads",
+        "type": "Tag",
+        "location": {
+          "line": 2,
+          "column": 50
+        }
+      }
+    ]
+  }
+]
