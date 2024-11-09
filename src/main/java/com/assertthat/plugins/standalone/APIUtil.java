@@ -125,7 +125,6 @@ public class APIUtil {
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
                 .post(requestBody)
-                .addHeader("User-Agent", USER_AGENT)
                 .addHeader("X-Atlassian-Token", "no-check")
                 .build();
         Response response = client.newCall(request).execute();

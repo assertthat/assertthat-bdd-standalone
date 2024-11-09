@@ -5,7 +5,7 @@
 
     <groupId>com.assertthat.plugins</groupId>
     <artifactId>assertthat-bdd-standalone</artifactId>
-    <version>1.9.11</version>
+    <version>1.9.12</version>
     <name>assertthat-bdd-standalone</name>
     <description>AssertThat BDD Jira plugin client standalone</description>
     <url>http://www.assertthat.com</url>
@@ -59,6 +59,12 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

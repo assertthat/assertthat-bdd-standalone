@@ -88,7 +88,9 @@ class OkHttpClientBuilder {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             Request authenticatedRequest = request.newBuilder()
-                    .header("Authorization", credentials).build();
+                    .header("Authorization", credentials)
+                    .header("X-Atlassian-Token", "no-check")
+                    .build();
             return chain.proceed(authenticatedRequest);
         }
 
@@ -106,7 +108,9 @@ class OkHttpClientBuilder {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             Request authenticatedRequest = request.newBuilder()
-                    .header("Authorization", "Bearer " + token).build();
+                    .header("Authorization", "Bearer " + token)
+                    .header("X-Atlassian-Token", "no-check")
+                    .build();
             return chain.proceed(authenticatedRequest);
         }
 
